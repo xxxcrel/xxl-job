@@ -1,5 +1,7 @@
 package com.xxl.job.core.biz;
 
+import java.util.List;
+
 import com.xxl.job.core.biz.model.*;
 
 /**
@@ -42,4 +44,10 @@ public interface ExecutorBiz {
      */
     public ReturnT<LogResult> log(LogParam logParam);
 
+    /**
+     * 查询任务进度
+     * @param progressParam
+     * @return
+     */
+    public ReturnT<ProgressResult> progress(ProgressParam progressParam);
 }

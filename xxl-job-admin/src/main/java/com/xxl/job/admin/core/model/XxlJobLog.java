@@ -34,6 +34,25 @@ public class XxlJobLog {
 	// alarm info
 	private int alarmStatus;
 
+	public XxlJobLog(){}
+	public XxlJobLog(XxlJobLog xxlJobLog) {
+		setId(xxlJobLog.id);
+		setJobGroup(xxlJobLog.jobGroup);
+		setJobId(xxlJobLog.jobId);
+		setExecutorAddress(xxlJobLog.executorAddress);
+		setExecutorHandler(xxlJobLog.executorHandler);
+		setExecutorParam(xxlJobLog.executorParam);
+		setExecutorShardingParam(xxlJobLog.executorShardingParam);
+		setExecutorFailRetryCount(xxlJobLog.executorFailRetryCount);
+		setTriggerTime(xxlJobLog.triggerTime);
+		setTriggerCode(xxlJobLog.triggerCode);
+		setTriggerMsg(xxlJobLog.triggerMsg);
+		setHandleTime(xxlJobLog.handleTime);
+		setHandleCode(xxlJobLog.handleCode);
+		setHandleMsg(xxlJobLog.handleMsg);
+		setAlarmStatus(xxlJobLog.alarmStatus);
+	}
+
 	public long getId() {
 		return id;
 	}

@@ -1,5 +1,7 @@
 package com.xxl.job.core.context;
 
+import com.xxl.job.core.progress.ProgressRepository;
+
 /**
  * xxl-job context
  *
@@ -61,6 +63,12 @@ public class XxlJobContext {
     private String handleMsg;
 
 
+    // ---------------------- for progress ----------------------
+
+    private int totalProgress;
+
+    private int currentProgress;
+
     public XxlJobContext(long jobId, String jobParam, String jobLogFileName, int shardIndex, int shardTotal) {
         this.jobId = jobId;
         this.jobParam = jobParam;
@@ -105,6 +113,24 @@ public class XxlJobContext {
 
     public String getHandleMsg() {
         return handleMsg;
+    }
+
+    public int getTotalProgress() {
+        return totalProgress;
+    }
+
+    public void setTotalProgress(int totalProgress) {
+        ProgressRepository.setProgress(jobId, totalProgress, 0);
+        this.totalProgress = totalProgress;
+    }
+
+    public int getCurrentProgress() {
+        return currentProgress;
+    }
+
+    public void setCurrentProgress(int currentProgress) {
+        ProgressRepository.setProgress(jobId, totalProgress == 0 ? 100 : totalProgress, currentProgress);
+        this.currentProgress = currentProgress;
     }
 
     // ---------------------- tool ----------------------

@@ -1,5 +1,7 @@
 package com.xxl.job.core.biz.client;
 
+import java.util.List;
+
 import com.xxl.job.core.biz.ExecutorBiz;
 import com.xxl.job.core.biz.model.*;
 import com.xxl.job.core.util.XxlJobRemotingUtil;
@@ -53,4 +55,8 @@ public class ExecutorBizClient implements ExecutorBiz {
         return XxlJobRemotingUtil.postBody(addressUrl + "log", accessToken, timeout, logParam, LogResult.class);
     }
 
+    @Override
+    public ReturnT<ProgressResult> progress(ProgressParam progressParam) {
+        return XxlJobRemotingUtil.postBody(addressUrl + "progress", accessToken, timeout, progressParam, ProgressResult.class);
+    }
 }

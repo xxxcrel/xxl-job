@@ -10,11 +10,13 @@ import com.xxl.job.core.handler.IJobHandler;
 import com.xxl.job.core.handler.impl.GlueJobHandler;
 import com.xxl.job.core.handler.impl.ScriptJobHandler;
 import com.xxl.job.core.log.XxlJobFileAppender;
+import com.xxl.job.core.progress.ProgressRepository;
 import com.xxl.job.core.thread.JobThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by xuxueli on 17/3/1.
@@ -169,4 +171,9 @@ public class ExecutorBizImpl implements ExecutorBiz {
         return new ReturnT<LogResult>(logResult);
     }
 
+    @Override
+    public ReturnT<ProgressResult> progress(ProgressParam progressParam) {
+        List<TaskProgress> progressList = ProgressRepository.getProgress(progressParam.getJobIds());
+        return new ReturnT<>(new ProgressResult(progressList));
+    }
 }

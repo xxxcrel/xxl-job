@@ -5,6 +5,7 @@ import com.xxl.job.admin.core.complete.XxlJobCompleter;
 import com.xxl.job.admin.core.model.XxlJobGroup;
 import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.model.XxlJobLog;
+import com.xxl.job.admin.core.model.XxlJobLogExtension;
 import com.xxl.job.admin.core.scheduler.XxlJobScheduler;
 import com.xxl.job.admin.core.util.I18nUtil;
 import com.xxl.job.admin.dao.XxlJobGroupDao;
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +50,9 @@ public class JobLogController {
 	@Resource
 	public XxlJobLogDao xxlJobLogDao;
 
+	private List<XxlJobLogExtension> xxlJobLogExtensionListCache = new ArrayList<>();
+
+	private int list_count = 0;
 	@RequestMapping
 	public String index(HttpServletRequest request, Model model, @RequestParam(required = false, defaultValue = "0") Integer jobId) {
 
@@ -108,12 +114,51 @@ public class JobLogController {
 		// page query
 		List<XxlJobLog> list = xxlJobLogDao.pageList(start, length, jobGroup, jobId, triggerTimeStart, triggerTimeEnd, logStatus);
 		int list_count = xxlJobLogDao.pageListCount(start, length, jobGroup, jobId, triggerTimeStart, triggerTimeEnd, logStatus);
-		
+		if (!list.isEmpty()) {
+			for (XxlJobLog xxlJobLog : list) {
+				this.xxlJobLogExtensionListCache.add(new XxlJobLogExtension(xxlJobLog));
+				this.list_count = list_count;
+			}
+		}
 		// package result
 		Map<String, Object> maps = new HashMap<String, Object>();
 	    maps.put("recordsTotal", list_count);		// 总记录数
 	    maps.put("recordsFiltered", list_count);	// 过滤后的总记录数
 	    maps.put("data", list);  					// 分页列表
+		return maps;
+	}
+
+	@RequestMapping("/statList")
+	@ResponseBody
+	public Map<String, Object> statList(HttpServletRequest request,
+										@RequestParam(required = false, defaultValue = "0") int start,
+										@RequestParam(required = false, defaultValue = "10") int length,
+										int jobGroup, int jobId, int logStatus, String filterTime) {
+		// valid permission
+		JobInfoController.validPermission(request, jobGroup);	// 仅管理员支持查询全部；普通用户仅支持查询有权限的 jobGroup
+
+		// parse param
+		Date triggerTimeStart = null;
+		Date triggerTimeEnd = null;
+		if (filterTime!=null && filterTime.trim().length()>0) {
+			String[] temp = filterTime.split(" - ");
+			if (temp.length == 2) {
+				triggerTimeStart = DateUtil.parseDateTime(temp[0]);
+				triggerTimeEnd = DateUtil.parseDateTime(temp[1]);
+			}
+		}
+
+		// page query
+		if (!xxlJobLogExtensionListCache.isEmpty()) {
+			for (XxlJobLogExtension xxlJobLogExtension : xxlJobLogExtensionListCache) {
+				xxlJobLogExtension.setHandleStatus(10);
+			}
+		}
+		// package result
+		Map<String, Object> maps = new HashMap<String, Object>();
+		maps.put("recordsTotal", list_count);		// 总记录数
+		maps.put("recordsFiltered", list_count);	// 过滤后的总记录数
+		maps.put("data", xxlJobLogExtensionListCache);  					// 分页列表
 		return maps;
 	}
 

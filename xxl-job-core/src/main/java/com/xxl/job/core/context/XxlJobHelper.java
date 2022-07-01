@@ -251,5 +251,21 @@ public class XxlJobHelper {
         return true;
     }
 
+    public static boolean totalProgress(int total) {
+        XxlJobContext xxlJobContext = XxlJobContext.getXxlJobContext();
+        if (xxlJobContext == null) {
+            return false;
+        }
+        xxlJobContext.setTotalProgress(total);
+        return true;
+    }
 
+    public static boolean currentProgress(int current) {
+        XxlJobContext xxlJobContext = XxlJobContext.getXxlJobContext();
+        if (xxlJobContext == null) {
+            return false;
+        }
+        xxlJobContext.setCurrentProgress(current);
+        return true;
+    }
 }

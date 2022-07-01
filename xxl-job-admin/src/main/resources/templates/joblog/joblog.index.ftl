@@ -97,6 +97,7 @@
 					                  	<th name="handleTime" >${I18n.joblog_field_handleTime}</th>
 					                  	<th name="handleCode" >${I18n.joblog_field_handleCode}</th>
 					                  	<th name="handleMsg" >${I18n.joblog_field_handleMsg}</th>
+                                        <th name="handleStatus" >${I18n.joblog_field_handleStatus}</th>
 					                  	<th name="handleMsg" >${I18n.system_opt}</th>
 					                </tr>
 				                </thead>

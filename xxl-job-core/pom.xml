@@ -6,7 +6,7 @@
 		<artifactId>xxl-job</artifactId>
 		<version>2.3.1</version>
 	</parent>
-	<artifactId>xxl-job-core</artifactId>
+	<artifactId>xxl-job-core-progress</artifactId>
 	<packaging>jar</packaging>
 
 	<name>${project.artifactId}</name>

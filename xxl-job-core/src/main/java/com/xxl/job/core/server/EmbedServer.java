@@ -197,6 +197,9 @@ public class EmbedServer {
                     case "/log":
                         LogParam logParam = GsonTool.fromJson(requestData, LogParam.class);
                         return executorBiz.log(logParam);
+                    case "progress":
+                        ProgressParam progressParam = GsonTool.fromJson(requestData, ProgressParam.class);
+                        return executorBiz.progress(progressParam);
                     default:
                         return new ReturnT<String>(ReturnT.FAIL_CODE, "invalid request, uri-mapping(" + uri + ") not found.");
                 }
