@@ -16,6 +16,29 @@
 		<module>xxl-job-executor-samples</module>
     </modules>
 
+	<repositories>
+		<repository>
+			<id>qz-public</id>
+			<url>http://192.168.0.92:8081/nexus/content/repositories/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>qz-dsa</id>
+			<url>http://192.168.6.21:8081/repository/custom-public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

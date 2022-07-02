@@ -1,0 +1,12 @@
+Description=xxl-job-admin service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/java -server -Xms256m -Xmx256m -jar /opt/bd_server/xxl-job/xxl-job-admin-2.3.1.jar --spring.config.location=optional:file:/opt/bd_server/xxl-job/
+ExecStop=/usr/bin/echo 'not stop'
+KillMode=process
+Restart=on-failure
+RestartSec=60s
+
+[Install]
+WantedBy=multi-user.target

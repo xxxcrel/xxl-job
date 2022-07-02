@@ -8,6 +8,10 @@ public class ProgressParam implements Serializable {
 
     private List<Long> jobIds;
 
+    public ProgressParam(List<Long> jobIds) {
+        this.jobIds = jobIds;
+    }
+
     public List<Long> getJobIds() {
         return jobIds;
     }
