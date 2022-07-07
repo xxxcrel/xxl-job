@@ -30,7 +30,19 @@ import java.util.concurrent.TimeUnit;
 public class SampleXxlJob {
     private static Logger logger = LoggerFactory.getLogger(SampleXxlJob.class);
 
-
+    @XxlJob("demoJob")
+    public void demoJob() {
+        System.out.println("demoJob");
+        XxlJobHelper.totalProgress(100);
+        for (int i = 1; i <= 100; ++i) {
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            XxlJobHelper.currentProgress(i);
+        }
+    }
     /**
      * 1、简单任务示例（Bean模式）
      */
